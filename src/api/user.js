@@ -1,16 +1,33 @@
 import axios from '@/libs/api.request'
 
-export const login = ({ userName, password }) => {
+export const login = ({ username, password }) => {
   const data = {
-    userName,
-    password
+    data: {
+      username,
+      password
+    }
   }
   return axios.request({
-    url: 'login',
+    url: 'merchant/login',
     data,
     method: 'post'
   })
 }
+
+export const register = ({ username, password }) => {
+  const data = {
+    data: {
+      username,
+      password
+    }
+  }
+  return axios.request({
+    url: 'merchant/register',
+    data,
+    method: 'post'
+  })
+}
+
 
 export const getUserInfo = (token) => {
   return axios.request({

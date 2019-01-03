@@ -1,3 +1,5 @@
+@import "../../styles/variable";
+
 .main{
   .logo-con{
     height: 64px;
@@ -72,4 +74,42 @@
 
 .ivu-select-dropdown.ivu-dropdown-transfer{
   max-height: 400px;
+}
+
+.star-detail-base {
+  border-top: 1px solid @border-color-table;
+  border-bottom: 1px solid @border-color-table;
+  border-right: 1px solid @border-color-table;
+  min-height: 40px;
+  margin-top: -1px;
+  .ivu-col {
+    padding: 5px 16px;
+    box-sizing: border-box;
+    text-align: left;
+    display:-moz-box;
+    display: -webkit-box;
+
+    // TODO 兼容IE
+    -webkit-box-orient: vertical;
+    -webkit-box-pack: center;
+    -webkit-box-align: start;
+
+    -moz-box-orient: vertical;
+    -moz-box-pack: center;
+    -moz-box-align: start;
+
+    &:nth-child(odd) {
+      -webkit-box-pack: center;
+      -webkit-box-align: end;
+
+      -moz-box-pack: center;
+      -moz-box-align: end;
+
+      border-left: 1px solid @border-color-table;
+      border-right: 1px solid @border-color-table;
+      background-color: #f6f7fb;
+      color: #333;
+      text-align: right;
+    }
+  }
 }

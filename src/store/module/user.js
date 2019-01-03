@@ -1,5 +1,6 @@
 import {
   login,
+  register,
   logout,
   getUserInfo
 } from '@/api/user'
@@ -15,48 +16,80 @@ export default {
     hasGetInfo: false
   },
   mutations: {
-    setAvator (state, avatorPath) {
+    setAvator(state, avatorPath) {
       state.avatorImgPath = avatorPath
     },
-    setUserId (state, id) {
+    setUserId(state, id) {
       state.userId = id
     },
-    setUserName (state, name) {
+    setUserName(state, name) {
       state.userName = name
     },
-    setAccess (state, access) {
+    setAccess(state, access) {
       state.access = access
     },
-    setToken (state, token) {
+    setToken(state, token) {
       state.token = token
       setToken(token)
     },
-    setHasGetInfo (state, status) {
+    setHasGetInfo(state, status) {
       state.hasGetInfo = status
     }
   },
-  getters: {
-    
-  },
+  getters: {},
   actions: {
     // 登录
-    handleLogin ({ commit }, {userName, password}) {
-      userName = userName.trim()
+    handleLogin({ commit }, { userName, password }) {
+      const username = userName.trim()
       return new Promise((resolve, reject) => {
         login({
-          userName,
+          username,
           password
         }).then(res => {
-          const data = res.data
-          commit('setToken', data.token)
-          resolve()
+
+          console.log('resresresresresres')
+          console.log(res)
+          console.log(res.data)
+          commit('setToken', 'super_admin')
+          if (res.data.error_msg === 0) {
+            commit('setToken', 'admin')
+          }
+          if (res.data.error_msg === '请勿重复登陆') {
+
+            // commit('setToken', 'customer')
+            // console.log('已登录')
+          }
+          // const data = res.data
+          // commit('setToken', data.token)
+          resolve(res)
+        }).catch(err => {
+          reject(err)
+        })
+      })
+    },
+    // 注册
+    handleRegister({ commit }, { userName, password }) {
+      const username = userName.trim()
+      return new Promise((resolve, reject) => {
+        register({
+          username,
+          password
+        }).then(res => {
+          console.log('register')
+          console.log(res)
+          // this.$router.push({
+          //   name: this.$config.homeName
+          // })
+          // const data = res.data
+          // commit('setToken', 'data.token')
+          resolve(res)
         }).catch(err => {
           reject(err)
         })
       })
     },
     // 退出登录
-    handleLogOut ({ state, commit }) {
+    handleLogOut({ state, commit }) {
       return new Promise((resolve, reject) => {
         logout(state.token).then(() => {
           commit('setToken', '')
@@ -72,7 +105,7 @@ export default {
       })
     },
     // 获取用户相关信息
-    getUserInfo ({ state, commit }) {
+    getUserInfo({ state, commit }) {
       return new Promise((resolve, reject) => {
         try {
           getUserInfo(state.token).then(res => {

@@ -17,9 +17,12 @@ export default {
    * @description api请求基础路径
    */
   baseUrl: {
-    dev: 'https://www.easy-mock.com/mock/5add9213ce4d0e69998a6f51/iview-admin/',
-    pro: 'https://produce.com'
+    dev: 'http://situxu.com/',
+    pro: 'http://situxu.com/'
   },
+
+  // baseImgUrl: 'http://timon-qiniu.landman.cn/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202019-01-03%20%E4%B8%8B%E5%8D%8811.32.05.png',
+  baseImgUrl: 'http://timon-qiniu.landman.cn/',
   /**
    * @description 默认打开的首页的路由name值，默认为home
    */

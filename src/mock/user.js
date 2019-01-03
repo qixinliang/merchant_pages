@@ -1,5 +1,6 @@
 import Mock from 'mockjs'
 import { doCustomTimes } from '@/libs/util'
+
 const Random = Mock.Random
 
 export const getMessageInit = () => {
@@ -32,6 +33,16 @@ export const getMessageInit = () => {
     readed: readedList,
     trash: trashList
   }
+}
+
+const userInfo = {
+  'error_code': 0,
+  'error_msg': '\u767b\u9646\u6210\u529f',
+  'data': { 'uid': 22, 'user_type': 1, 'token': 'fad4e64ef0dd9fa8454b7ddf6b5e679a' }
+}
+
+export const getUserInfo = () => {
+  return userInfo
 }
 
 export const getContentByMsgId = () => {

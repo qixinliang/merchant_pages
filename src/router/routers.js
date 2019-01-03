@@ -1,4 +1,5 @@
 import Main from '@/components/main'
+import parentView from '@/components/parent-view'
 
 /**
  * iview-admin中meta除了原生参数外可配置的参数:
@@ -17,14 +18,14 @@ import Main from '@/components/main'
  */
 
 export default [{
-    path: '/login',
-    name: 'login',
-    meta: {
-      title: 'Login - 登录',
-      hideInMenu: true
-    },
-    component: () => import('@/view/login/login.vue')
+  path: '/login',
+  name: 'login',
+  meta: {
+    title: 'Login - 登录',
+    hideInMenu: true
   },
+  component: () => import('@/view/login/login.vue')
+},
   {
     path: '/',
     name: '_home',
@@ -55,14 +56,60 @@ export default [{
     },
     component: Main,
     children: [{
-        path: 'organization_page',
-        name: 'organization_page',
-        meta: {
-          icon: 'md-globe',
-          title: '组织结构'
-        },
-        component: () => import('@/view/system-management/organization.vue')
+      path: '/manage',
+      name: 'manage',
+      meta: {
+        icon: 'md-settings',
+        title: '管理'
       },
+      component: parentView,
+      children: [
+        {
+          path: 'commercial-tenant-edit',
+          name: 'commercial-tenant-edit',
+          meta: {
+            icon: 'md-settings',
+            title: '商户信息完善页面'
+          },
+          component: () => import('@/view/single-page/commercial-tenant/edit.vue')
+        },
+        {
+          path: 'commercial-tenant-list',
+          name: 'commercial-tenant-list',
+          meta: {
+            icon: 'md-settings',
+            title: '商户列表页'
+          },
+          component: () => import('@/view/single-page/commercial-tenant/list.vue')
+        },
+        {
+          path: 'user-list',
+          name: 'user-list',
+          meta: {
+            icon: 'md-settings',
+            title: '用户详情页'
+          },
+          component: () => import('@/view/single-page/user/list.vue')
+        },
+        {
+          path: 'user-detail',
+          name: 'user-detail',
+          meta: {
+            icon: 'md-settings',
+            title: '用户详情页'
+          },
+          component: () => import('@/view/single-page/user/detail.vue')
+        }
+      ]
+    }, {
+      path: 'organization_page',
+      name: 'organization_page',
+      meta: {
+        icon: 'md-globe',
+        title: '组织结构'
+      },
+      component: () => import('@/view/system-management/organization.vue')
+    },
       {
         path: 'user_page',
         name: 'user_page',
