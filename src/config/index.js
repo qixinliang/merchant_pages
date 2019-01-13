@@ -18,11 +18,17 @@ export default {
    */
   baseUrl: {
     dev: 'http://situxu.com/',
-    pro: 'http://situxu.com/'
+    pro: '/'
   },
 
   // baseImgUrl: 'http://timon-qiniu.landman.cn/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202019-01-03%20%E4%B8%8B%E5%8D%8811.32.05.png',
   baseImgUrl: 'http://timon-qiniu.landman.cn/',
+
+  tokenUrl: {
+    // dev: 'http://localhost:3000/token',
+    dev: 'http://situxu.com/qiniu/token',
+    pro: '/qiniu/token'
+  },
   /**
    * @description 默认打开的首页的路由name值，默认为home
    */

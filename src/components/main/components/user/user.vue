@@ -6,9 +6,12 @@
       </Badge> -->
       <Icon :size="18" type="md-arrow-dropdown"></Icon>
       <DropdownMenu slot="list">
-        <!-- <DropdownItem name="message">
-          消息中心<Badge style="margin-left: 10px" :count="messageUnreadCount"></Badge>
-        </DropdownItem> -->
+         <DropdownItem name="addUserInfo">
+          完善个人信息
+        </DropdownItem>
+        <DropdownItem name="userInfo">
+          修改个人信息
+        </DropdownItem>
         <DropdownItem name="logout">退出登录</DropdownItem>
       </DropdownMenu>
     </Dropdown>
@@ -46,12 +49,24 @@ export default {
     //     name: 'message_page'
     //   })
     // },
+    changeUserInfo () {
+      this.$router.push({
+        name: 'user-info'
+      })
+    },
+    addUserInfo(){
+      this.$router.push({
+        name: 'add-user-info'
+      })
+    },
     handleClick (name) {
       switch (name) {
         case 'logout': this.logout()
           break
-        // case 'message': this.message()
-        //   break
+        case 'userInfo': this.changeUserInfo()
+          break
+        case 'addUserInfo': this.addUserInfo()
+          break
       }
     }
   }

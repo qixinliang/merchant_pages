@@ -22,7 +22,7 @@
 <script>
 import LoginForm from '_c/login-form'
 import RegisterForm from '_c/register-form'
-import { mapActions } from 'vuex'
+import { mapActions, mapMutations } from 'vuex'
 
 export default {
   components: {
@@ -35,6 +35,10 @@ export default {
     }
   },
   methods: {
+    ...mapMutations([
+      'setUserName',
+      'setAccess'
+    ]),
     ...mapActions([
       'handleLogin',
       'handleRegister',
@@ -44,13 +48,15 @@ export default {
     //   this.handleLogin({ userName, password })
     // },
     handleSubmit ({ userName, password }) {
+
+      this.setUserName(userName)
       this.handleLogin({ userName, password }).then(res => {
-        // this.getUserInfo().then(res => {
-        //   this.$router.push({
-        //     name: this.$config.homeName
-        //   })
-        // })
-        // alert(11)
+        this.getUserInfo(userName).then(res => {
+          this.setAccess(res.data.type)
+          this.$router.push({
+            name: this.$config.homeName
+          })
+        })
 
         this.$router.push({
           name: this.$config.homeName

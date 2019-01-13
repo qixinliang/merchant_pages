@@ -1,6 +1,5 @@
 <template>
   <div>
-
     <Card style="width:100%">
       <Form v-show="!isShowDetail" ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="80">
         <FormItem label="Name" prop="name">
@@ -50,8 +49,8 @@
                  placeholder="Enter something..."></Input>
         </FormItem>
         <!--<FormItem>-->
-          <!--<Button type="primary" @click="handleSubmit('formValidate')">Submit</Button>-->
-          <!--<Button @click="handleReset('formValidate')" style="margin-left: 8px">Reset</Button>-->
+        <!--<Button type="primary" @click="handleSubmit('formValidate')">Submit</Button>-->
+        <!--<Button @click="handleReset('formValidate')" style="margin-left: 8px">Reset</Button>-->
         <!--</FormItem>-->
       </Form>
       <div class="example-content" v-show="isShowDetail">
@@ -90,13 +89,43 @@
       </Row>
     </Card>
 
+    <Card style="height: 283px;">
+      <p slot="title">
+        <Icon type="ios-pricetags-outline"></Icon>
+        缩略图
+      </p>
+      <Upload
+        ref="upload"
+        :on-success="handleSuccess"
+        :format="['jpg','jpeg','png']"
+        :max-size="2048"
+        type="drag"
+        name="file"
+        action="https://upload.qiniup.com"
+        :data="{token: token}"
+        :show-upload-list="false"
+        style="display: inline-block;width:58px;">
+        <div style="width:58px;height:58px;line-height:58px;">
+          <Icon type="ios-camera" size="20" v-show="!avatar"></Icon>
+          <img style="width: 100%;height:100%" :src="avatar" v-show="avatar" alt="">
+        </div>
+      </Upload>
+    </Card>
+
   </div>
 
 </template>
 <script>
+import axios from 'axios'
+import config from '@/config'
+
+const tokenUrl = process.env.NODE_ENV === 'development' ? config.tokenUrl.dev : config.tokenUrl.pro
+
 export default {
   data () {
     return {
+      token: '',
+      avatar: '',
       isShowDetail: true,
       formValidate: {
         name: '',
@@ -139,6 +168,9 @@ export default {
       }
     }
   },
+  mounted () {
+    this.getUploadToken()
+  },
   methods: {
     handleSubmit (name) {
       this.$refs[name].validate((valid) => {
@@ -151,9 +183,26 @@ export default {
     },
     handleReset (name) {
       this.$refs[name].resetFields()
+      this.getUploadToken()
     },
-    handleEdit() {
+    handleEdit () {
       this.isShowDetail = !this.isShowDetail
+    },
+    getUploadToken () {
+      axios.post(
+        tokenUrl,
+        {
+          name: '2019/ddd.jpg'
+        }
+      ).then((res) => {
+        console.log('res')
+        console.log(res)
+        this.token = res.data
+      })
+    },
+    handleSuccess (res) {
+      console.log(res)
+      this.avatar = config.baseImgUrl + res.key
     }
   }
 }

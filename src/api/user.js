@@ -28,20 +28,21 @@ export const register = ({ username, password }) => {
   })
 }
 
-
-export const getUserInfo = (token) => {
+export const getUserInfo = (username) => {
   return axios.request({
-    url: 'get_info',
-    params: {
-      token
+    url: 'merchant/info',
+    data: {
+      data: {
+        username
+      }
     },
-    method: 'get'
+    method: 'post'
   })
 }
 
 export const logout = (token) => {
   return axios.request({
-    url: 'logout',
+    url: 'merchant/logout',
     method: 'post'
   })
 }

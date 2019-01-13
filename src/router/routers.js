@@ -48,6 +48,84 @@ export default [{
     }]
   },
   {
+    path: '/manage',
+    name: 'manage',
+    meta: {
+      icon: 'md-settings',
+      title: '管理'
+    },
+    component: Main,
+    children: [
+      {
+        path: 'user-manage',
+        name: 'user-manage',
+        meta: {
+          icon: 'md-settings',
+          title: '用户／商户管理'
+        },
+        component: () => import('@/view/single-page/commercial-tenant/list.vue')
+      },
+      {
+        path: 'user-info',
+        name: 'user-info',
+        meta: {
+          icon: 'md-settings',
+          title: '修改个人信息',
+          hideInBread: true,
+          hideInMenu: true
+        },
+        component: () => import('@/view/single-page/user/edit.vue')
+      },
+      {
+        path: 'add-user-info',
+        name: 'add-user-info',
+        meta: {
+          icon: 'md-settings',
+          title: '完善个人信息',
+          hideInBread: true,
+          hideInMenu: true
+        },
+        component: () => import('@/view/single-page/commercial-tenant/edit.vue')
+      },
+      {
+        path: 'commercial-tenant-edit',
+        name: 'commercial-tenant-edit',
+        meta: {
+          icon: 'md-settings',
+          title: '商户信息完善页面'
+        },
+        component: () => import('@/view/single-page/commercial-tenant/edit.vue')
+      },
+      {
+        path: 'commercial-tenant-list',
+        name: 'commercial-tenant-list',
+        meta: {
+          icon: 'md-settings',
+          title: '商户列表页'
+        },
+        component: () => import('@/view/single-page/commercial-tenant/list.vue')
+      },
+      {
+        path: 'user-list',
+        name: 'user-list',
+        meta: {
+          icon: 'md-settings',
+          title: '用户详情页'
+        },
+        component: () => import('@/view/single-page/user/list.vue')
+      },
+      {
+        path: 'user-detail',
+        name: 'user-detail',
+        meta: {
+          icon: 'md-settings',
+          title: '用户详情页'
+        },
+        component: () => import('@/view/single-page/user/detail.vue')
+      }
+    ]
+  },
+  {
     path: '/components',
     name: 'components',
     meta: {
@@ -55,53 +133,8 @@ export default [{
       title: '系统管理'
     },
     component: Main,
+
     children: [{
-      path: '/manage',
-      name: 'manage',
-      meta: {
-        icon: 'md-settings',
-        title: '管理'
-      },
-      component: parentView,
-      children: [
-        {
-          path: 'commercial-tenant-edit',
-          name: 'commercial-tenant-edit',
-          meta: {
-            icon: 'md-settings',
-            title: '商户信息完善页面'
-          },
-          component: () => import('@/view/single-page/commercial-tenant/edit.vue')
-        },
-        {
-          path: 'commercial-tenant-list',
-          name: 'commercial-tenant-list',
-          meta: {
-            icon: 'md-settings',
-            title: '商户列表页'
-          },
-          component: () => import('@/view/single-page/commercial-tenant/list.vue')
-        },
-        {
-          path: 'user-list',
-          name: 'user-list',
-          meta: {
-            icon: 'md-settings',
-            title: '用户详情页'
-          },
-          component: () => import('@/view/single-page/user/list.vue')
-        },
-        {
-          path: 'user-detail',
-          name: 'user-detail',
-          meta: {
-            icon: 'md-settings',
-            title: '用户详情页'
-          },
-          component: () => import('@/view/single-page/user/detail.vue')
-        }
-      ]
-    }, {
       path: 'organization_page',
       name: 'organization_page',
       meta: {

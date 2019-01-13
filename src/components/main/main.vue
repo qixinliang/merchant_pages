@@ -1,11 +1,13 @@
 <template>
   <Layout style="height: 100%" class="main">
-    <Sider hide-trigger collapsible :width="256" :collapsed-width="64" v-model="collapsed" class="left-sider" :style="{overflow: 'hidden'}">
-      <side-menu accordion ref="sideMenu" :active-name="$route.name" :collapsed="collapsed" @on-select="turnToPage" :menu-list="menuList">
+    <Sider hide-trigger collapsible :width="256" :collapsed-width="64" v-model="collapsed" class="left-sider"
+           :style="{overflow: 'hidden'}">
+      <side-menu accordion ref="sideMenu" :active-name="$route.name" :collapsed="collapsed" @on-select="turnToPage"
+                 :menu-list="menuList">
         <!-- 需要放在菜单上面的内容，如Logo，写在side-menu标签内部，如下 -->
         <div class="logo-con">
-          <img v-show="!collapsed" :src="maxLogo" key="max-logo" />
-          <img v-show="collapsed" :src="minLogo" key="min-logo" />
+          <img v-show="!collapsed" :src="maxLogo" key="max-logo"/>
+          <img v-show="collapsed" :src="minLogo" key="min-logo"/>
         </div>
       </side-menu>
     </Sider>
@@ -16,7 +18,8 @@
           <user :user-avator="userAvator"/>
           <language v-if="$config.useI18n" @on-lang-change="setLocal" style="margin-right: 10px;" :lang="local"/>
           <!-- <error-store v-if="$config.plugin['error-store'] && $config.plugin['error-store'].showInHeader" :has-read="hasReadErrorPage" :count="errorCount"></error-store> -->
-          <fullscreen v-model="isFullscreen" style="margin-right: 10px;"/>
+          <!--<fullscreen v-model="isFullscreen" style="margin-right: 10px;"/>-->
+          <span style="font-size: 14px;margin-right: 16px;">Hi,{{userName}},欢迎你</span>
         </header-bar>
       </Header>
       <Content class="main-content-con">
@@ -50,6 +53,7 @@ import routers from '@/router/routers'
 import minLogo from '@/assets/images/logo-min.jpg'
 import maxLogo from '@/assets/images/logo.jpg'
 import './main.less'
+
 export default {
   name: 'Main',
   components: {
@@ -67,13 +71,15 @@ export default {
       collapsed: false,
       minLogo,
       maxLogo,
-      isFullscreen: false
+      isFullscreen: false,
+      userName: this.$store.state.user.userName
     }
   },
   computed: {
     // ...mapGetters([
     //   'errorCount'
     // ]),
+
     tagNavList () {
       return this.$store.state.app.tagNavList
     },
@@ -91,7 +97,7 @@ export default {
     },
     local () {
       return this.$store.state.app.local
-    },
+    }
     // hasReadErrorPage () {
     //   return this.$store.state.app.hasReadErrorPage
     // },
@@ -112,8 +118,9 @@ export default {
     ]),
     turnToPage (route) {
       let { name, params, query } = {}
-      if (typeof route === 'string') name = route
-      else {
+      if (typeof route === 'string') {
+        name = route
+      } else {
         name = route.name
         params = route.params
         query = route.query

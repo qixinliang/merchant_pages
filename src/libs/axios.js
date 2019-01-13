@@ -11,7 +11,8 @@ class HttpRequest {
       baseURL: this.baseUrl,
       headers: {
         //
-      }
+      },
+      token: 'sdfsdfsd'
     }
     return config
   }
