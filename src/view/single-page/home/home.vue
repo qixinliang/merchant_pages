@@ -1,83 +1,118 @@
 <template>
-  <div>
-    <Row :gutter="20">
-      <i-col :xs="12" :md="8" :lg="4" v-for="(infor, i) in inforCardData" :key="`infor-${i}`" style="height: 120px;padding-bottom: 10px;">
-        <infor-card shadow :color="infor.color" :icon="infor.icon" :icon-size="36">
-          <count-to :end="infor.count" count-class="count-style"/>
-          <p>{{ infor.title }}</p>
-        </infor-card>
-      </i-col>
-    </Row>
-    <Row :gutter="20" style="margin-top: 10px;">
-      <i-col :md="24" :lg="8" style="margin-bottom: 20px;">
-        <Card shadow>
-          <chart-pie style="height: 300px;" :value="pieData" text="用户访问来源"></chart-pie>
-        </Card>
-      </i-col>
-      <i-col :md="24" :lg="16" style="margin-bottom: 20px;">
-        <Card shadow>
-          <chart-bar style="height: 300px;" :value="barData" text="每周用户活跃量"/>
-        </Card>
-      </i-col>
-    </Row>
-    <Row>
-      <Card shadow>
-        <example style="height: 310px;"/>
-      </Card>
-    </Row>
-  </div>
+  <Card>
+    <div class="example-content" v-show="isShowDetail">
+      <div class="avatar-wrapper">
+        <img style="width: 82px; height: 82px" src="https://ubmcmm.baidustatic.com/media/v1/0f000Dd29O15Im4ZGHXmF0.jpg"
+             alt="">
+      </div>
+      <div class="user-detail-wrapper">
+        <Row type="flex" class-name="star-detail-base">
+          <Col span="3" order="1">商户姓名</Col>
+          <Col span="5" order="2">{{userDetail.username}}</Col>
+          <Col span="3" order="3">用户名（手机号）</Col>
+          <Col span="5" order="4">{{userDetail.mobile}}</Col>
+          <Col span="3" order="5">会员等级</Col>
+          <Col span="5" order="6">{{userDetail.level}}级</Col>
+        </Row>
+        <Row type="flex" class-name="star-detail-base">
+          <Col span="3" order="1">我的二维码</Col>
+          <Col span="5" order="2">
+            <Button @click="preview(userDetail.erweima)">查看</Button>
+            <Button @click="setQrcode" style="margin-left: 16px">重置</Button>
+          </Col>
+          <Col span="3" order="3">会员到期日</Col>
+          <Col span="5" order="4">{{userDetail.expire_date}}</Col>
+          <Col span="3" order="5"></Col>
+          <Col span="5" order="6"></Col>
+        </Row>
+
+      </div>
+
+    </div>
+  </Card>
+
 </template>
 
 <script>
-import InforCard from '_c/info-card'
-import CountTo from '_c/count-to'
-import { ChartPie, ChartBar } from '_c/charts'
-import Example from './example.vue'
+import { getUserInfo } from '@/api/user'
+import { setQrcode } from '@/api/commercial-tenant'
+
+import dayjs from 'dayjs'
+import erweima from '@/assets/images/test/ewm.png'
+
 export default {
   name: 'home',
-  components: {
-    InforCard,
-    CountTo,
-    ChartPie,
-    ChartBar,
-    Example
-  },
+  components: {},
   data () {
     return {
-      inforCardData: [
-        { title: '新增用户', icon: 'md-person-add', count: 803, color: '#2d8cf0' },
-        { title: '累计点击', icon: 'md-locate', count: 232, color: '#19be6b' },
-        { title: '新增问答', icon: 'md-help-circle', count: 142, color: '#ff9900' },
-        { title: '分享统计', icon: 'md-share', count: 657, color: '#ed3f14' },
-        { title: '新增互动', icon: 'md-chatbubbles', count: 12, color: '#E46CBB' },
-        { title: '新增页面', icon: 'md-map', count: 14, color: '#9A66E4' }
-      ],
-      pieData: [
-        {value: 335, name: '直接访问'},
-        {value: 310, name: '邮件营销'},
-        {value: 234, name: '联盟广告'},
-        {value: 135, name: '视频广告'},
-        {value: 1548, name: '搜索引擎'}
-      ],
-      barData: {
-        Mon: 13253,
-        Tue: 34235,
-        Wed: 26321,
-        Thu: 12340,
-        Fri: 24643,
-        Sat: 1322,
-        Sun: 1324
-      }
+      isShowDetail: true,
+      userDetail: {}
     }
   },
   mounted () {
     //
+    const data = {
+      username: this.$store.state.user.userName
+    }
+    getUserInfo(data).then(res => {
+      console.log('res')
+      console.log(res)
+      if (res.data.error_code === 0) {
+        const data = res.data.data
+        this.userDetail = data
+        this.userDetail.level = data.level ? data.level : 0
+        this.userDetail.erweima = data.erweima ? data.erweima : ''
+        this.userDetail.expire_date = data.expire_date ? data.expire_date : dayjs(new Date().getTime() + 365*24*60*60*1000).format('YYYY-MM-DD HH:mm:ss')
+        this.userDetail.erweima = erweima
+      }
+    })
+  },
+  methods:{
+    preview (a) {
+      const title = '查看二维码'
+      const content = '<img style="width: 100%;height:100%"  src="'+ a +'">'
+      this.$Modal.info({
+        title: title,
+        width: 300,
+        content: content
+
+      })
+    },
+    setQrcode () {
+      const data = {
+        merchant_id: this.$store.state.user.userId,
+        uid: this.$store.state.user.userId,
+        access_token: this.$store.state.user.accessToken
+      }
+      setQrcode(data).then(res => {
+        console.log(res)
+        if (res.data.error_code === 0) {
+          this.$Message.success('已成功生成二维码')
+        } else {
+          this.$Message.error(res.data.error_msg)
+        }
+      })
+    },
   }
 }
 </script>
 
 <style lang="less">
-.count-style{
-  font-size: 50px;
-}
+  .example-content {
+    position: relative;
+    .avatar-wrapper {
+      margin: 24px auto;
+      width: 82px;
+      height: 82px;
+      img {
+        border-radius: 41px;
+      }
+    }
+    .user-detail-wrapper {
+      /*margin-left: 98px;*/
+    }
+  }
+  .ivu-modal-confirm-body{
+    padding-left: 0 !important;
+  }
 </style>

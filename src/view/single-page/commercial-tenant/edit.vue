@@ -53,26 +53,44 @@
         <!--<Button @click="handleReset('formValidate')" style="margin-left: 8px">Reset</Button>-->
         <!--</FormItem>-->
       </Form>
+
       <div class="example-content" v-show="isShowDetail">
-        <Row type="flex" class-name="star-detail-base">
-          <Col span="3" order="1">姓名</Col>
-          <Col span="5" order="2">张三</Col>
-          <Col span="3" order="3">用户名（手机号）</Col>
-          <Col span="5" order="4">13333333333</Col>
-          <Col span="3" order="5">会员等级</Col>
-          <Col span="5" order="6">3级</Col>
-        </Row>
-        <Row type="flex" class-name="star-detail-base">
-          <Col span="3" order="1">我的二维码</Col>
-          <Col span="5" order="2">
-            <Button>查看</Button>
-            <Button style="margin-left: 16px">重置</Button>
-          </Col>
-          <Col span="3" order="3">会员到期日</Col>
-          <Col span="5" order="4">2019-01-02</Col>
-          <Col span="3" order="5">账户余额</Col>
-          <Col span="5" order="6">1000元</Col>
-        </Row>
+        <div class="avatar-wrapper">
+          <img style="width: 82px; height: 82px" src="https://ubmcmm.baidustatic.com/media/v1/0f000Dd29O15Im4ZGHXmF0.jpg" alt="">
+        </div>
+        <div class="user-detail-wrapper">
+          <Row type="flex" class-name="star-detail-base">
+            <Col span="3" order="1">商户姓名</Col>
+            <Col span="5" order="2">张三</Col>
+            <Col span="3" order="3">用户名（手机号）</Col>
+            <Col span="5" order="4">13333333333</Col>
+            <Col span="3" order="5">会员等级</Col>
+            <Col span="5" order="6">3级</Col>
+          </Row>
+          <Row type="flex" class-name="star-detail-base">
+            <Col span="3" order="1">我的二维码</Col>
+            <Col span="5" order="2">
+              <Button>查看</Button>
+              <Button style="margin-left: 16px">重置</Button>
+            </Col>
+            <Col span="3" order="3">会员到期日</Col>
+            <Col span="5" order="4">2019-01-02</Col>
+            <Col span="3" order="5">账户余额</Col>
+            <Col span="5" order="6">1000元</Col>
+          </Row>
+          <Row type="flex" class-name="star-detail-base">
+            <Col span="3" order="1">我的二维码</Col>
+            <Col span="5" order="2">
+              <Button>查看</Button>
+              <Button style="margin-left: 16px">重置</Button>
+            </Col>
+            <Col span="3" order="3">会员到期日</Col>
+            <Col span="5" order="4">2019-01-02</Col>
+            <Col span="3" order="5">账户余额</Col>
+            <Col span="5" order="6">1000元</Col>
+          </Row>
+        </div>
+
       </div>
 
       <Row style="margin-top: 24px;">
@@ -207,3 +225,20 @@ export default {
   }
 }
 </script>
+
+<style lang="less">
+  .example-content{
+    position: relative;
+    .avatar-wrapper{
+      margin: 24px auto;
+      width: 82px;
+      height: 82px;
+      img{
+        border-radius: 41px;
+      }
+    }
+    .user-detail-wrapper{
+      /*margin-left: 98px;*/
+    }
+  }
+</style>

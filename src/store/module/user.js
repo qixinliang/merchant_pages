@@ -25,6 +25,7 @@ export default {
     },
     setUserName (state, name) {
       state.userName = name
+      setUserName(name)
     },
     setAccess (state, access) {
       switch (access) {
@@ -84,6 +85,7 @@ export default {
           //   'data': { 'uid': 8, 'user_type': 1, 'token': '4d1134eb4c88fcee5293d8de2112781c' }
           // }
           commit('setToken', res.data.data.user_type)
+          commit('setUserName', username)
           // commit('setToken', 'super_admin')
           commit('setAccessToken', res.data.data.token)
           if (res.data.error_msg === 0) {

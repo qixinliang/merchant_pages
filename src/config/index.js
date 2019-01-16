@@ -2,7 +2,7 @@ export default {
   /**
    * @description 配置显示在浏览器标签的title
    */
-  title: 'vlink-admin',
+  title: 'game-admin',
   /**
    * @description token在Cookie中存储的天数，默认1天
    */
@@ -17,7 +17,7 @@ export default {
    * @description api请求基础路径
    */
   baseUrl: {
-    dev: 'http://situxu.com/',
+    dev: 'http://landman.com.cn/',
     pro: '/'
   },
 
@@ -26,7 +26,7 @@ export default {
 
   tokenUrl: {
     // dev: 'http://localhost:3000/token',
-    dev: 'http://situxu.com/qiniu/token',
+    dev: 'http://landman.com.cn/qiniu/token',
     pro: '/qiniu/token'
   },
   /**

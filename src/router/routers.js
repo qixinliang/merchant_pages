@@ -1,5 +1,4 @@
 import Main from '@/components/main'
-import parentView from '@/components/parent-view'
 
 /**
  * iview-admin中meta除了原生参数外可配置的参数:
@@ -66,127 +65,13 @@ export default [{
         component: () => import('@/view/single-page/commercial-tenant/list.vue')
       },
       {
-        path: 'user-info',
-        name: 'user-info',
+        path: 'sku-manage',
+        name: 'sku-manage',
         meta: {
           icon: 'md-settings',
-          title: '修改个人信息',
-          hideInBread: true,
-          hideInMenu: true
+          title: '奖品管理'
         },
-        component: () => import('@/view/single-page/user/edit.vue')
-      },
-      {
-        path: 'add-user-info',
-        name: 'add-user-info',
-        meta: {
-          icon: 'md-settings',
-          title: '完善个人信息',
-          hideInBread: true,
-          hideInMenu: true
-        },
-        component: () => import('@/view/single-page/commercial-tenant/edit.vue')
-      },
-      {
-        path: 'commercial-tenant-edit',
-        name: 'commercial-tenant-edit',
-        meta: {
-          icon: 'md-settings',
-          title: '商户信息完善页面'
-        },
-        component: () => import('@/view/single-page/commercial-tenant/edit.vue')
-      },
-      {
-        path: 'commercial-tenant-list',
-        name: 'commercial-tenant-list',
-        meta: {
-          icon: 'md-settings',
-          title: '商户列表页'
-        },
-        component: () => import('@/view/single-page/commercial-tenant/list.vue')
-      },
-      {
-        path: 'user-list',
-        name: 'user-list',
-        meta: {
-          icon: 'md-settings',
-          title: '用户详情页'
-        },
-        component: () => import('@/view/single-page/user/list.vue')
-      },
-      {
-        path: 'user-detail',
-        name: 'user-detail',
-        meta: {
-          icon: 'md-settings',
-          title: '用户详情页'
-        },
-        component: () => import('@/view/single-page/user/detail.vue')
-      }
-    ]
-  },
-  {
-    path: '/components',
-    name: 'components',
-    meta: {
-      icon: 'md-settings',
-      title: '系统管理'
-    },
-    component: Main,
-
-    children: [{
-      path: 'organization_page',
-      name: 'organization_page',
-      meta: {
-        icon: 'md-globe',
-        title: '组织结构'
-      },
-      component: () => import('@/view/system-management/organization.vue')
-    },
-      {
-        path: 'user_page',
-        name: 'user_page',
-        meta: {
-          icon: 'ios-contacts',
-          title: '用户管理'
-        },
-        component: () => import('@/view/system-management/user.vue')
-      },
-      {
-        path: 'role_page',
-        name: 'role_page',
-        meta: {
-          icon: 'md-briefcase',
-          title: '角色管理'
-        },
-        component: () => import('@/view/system-management/role.vue')
-      },
-      {
-        path: 'log_page',
-        name: 'log_page',
-        meta: {
-          icon: 'md-bookmarks',
-          title: '日志管理'
-        },
-        component: () => import('@/view/system-management/log.vue')
-      },
-      {
-        path: 'application_page',
-        name: 'application_page',
-        meta: {
-          icon: 'md-cube',
-          title: '应用管理'
-        },
-        component: () => import('@/view/system-management/application.vue')
-      },
-      {
-        path: 'resource_page',
-        name: 'resource_page',
-        meta: {
-          icon: 'ios-list-box',
-          title: '资源管理'
-        },
-        component: () => import('@/view/system-management/resource.vue')
+        component: () => import('@/view/single-page/sku/list.vue')
       }
     ]
   },

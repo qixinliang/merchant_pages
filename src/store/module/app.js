@@ -30,7 +30,9 @@ export default {
     breadCrumbList: [],
     tagNavList: [],
     homeRoute: {},
-    local: localRead('local')
+    local: localRead('local'),
+    isShowPayModal: false,
+    isShowDetailModal: false
   },
   getters: {
     menuList: (state, getters, rootState) => getMenuByRouter(routers, rootState.user.access)
@@ -84,7 +86,13 @@ export default {
     setLocal (state, lang) {
       localSave('local', lang)
       state.local = lang
-    }
+    },
+    setIsShowPayModal (state, flag) {
+      state.isShowPayModal = flag
+    },
+    setIsShowDetailModal (state, flag) {
+      state.isShowDetailModal = flag
+    },
   },
   actions: {
     // addErrorLog ({ commit, rootState }, info) {

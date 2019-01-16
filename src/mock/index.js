@@ -1,5 +1,7 @@
 import Mock from 'mockjs'
-import { login, logout, getUserInfo } from './login'
+// import { login, logout, getUserInfo } from './login'
+import { logout } from './login'
+// import { getUploadToken } from './commercial-tenant'
 // import { getTableData, getDragList, uploadImage } from './data'
 // import { getMessageInit, getContentByMsgId, hasRead, removeReaded, restoreTrash, messageCount } from './user'
 
@@ -12,6 +14,7 @@ Mock.setup({
 // Mock.mock(/\/login/, login)
 // Mock.mock(/\/get_info/, getUserInfo)
 Mock.mock(/\/logout/, logout)
+// Mock.mock(/\/qiniu\/token/, getUploadToken)
 // Mock.mock(/\/get_table_data/, getTableData)
 // Mock.mock(/\/get_drag_list/, getDragList)
 // Mock.mock(/\/save_error_logger/, 'success')

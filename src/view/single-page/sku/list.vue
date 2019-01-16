@@ -1,11 +1,11 @@
 <template>
   <div>
     <Card>
-      <Form ref="formSearch" :model="formSearch" :rules="ruleValidate" :label-width="100">
+      <Form ref="formSearch" :model="formSearch" :label-width="100">
         <Row>
           <Col :span="12">
-            <FormItem label="用户名" prop="name">
-              <Input v-model="formSearch.name" placeholder="请输入用户名"></Input>
+            <FormItem label="用户名" prop="sku_name">
+              <Input v-model="formSearch.sku_name" placeholder="请输入用户名"></Input>
             </FormItem>
           </Col>
           <Col span="8">
@@ -27,40 +27,20 @@
       :footer-hide="true"
       @on-ok="asyncOK">
       <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="100">
-        <FormItem label="用户名" prop="username">
-          <Input v-model="formValidate.username" placeholder="请输入用户名" :disabled="isUserNameDisabled"/>
+        <FormItem label="奖品名" prop="sku_name">
+          <Input v-model="formValidate.sku_name" placeholder="请输入用户名"/>
         </FormItem>
-        <FormItem label="密码" prop="password">
-          <Input v-model="formValidate.password" placeholder="请输入密码"/>
-        </FormItem>
-        <FormItem label="重复密码" prop="repass">
-          <Input v-model="formValidate.repass" placeholder="请输入密码"/>
-        </FormItem>
-        <FormItem label="用户类型" prop="type" v-if="isShowType">
-          <Select v-model="formValidate.type" :value="formValidate.type" placeholder="请选择类型">
-            <Option value="1">用户</Option>
-            <Option value="2">代理商</Option>
-            <Option value="3">管理员</Option>
+        <FormItem label="奖品有效期" prop="valid_time" v-if="isShowType">
+          <Select v-model="formValidate.valid_time" :value="formValidate.valid_time" placeholder="奖品有效期">
+            <Option value="7">7</Option>
+            <Option value="15">15</Option>
+            <Option value="30">30</Option>
+            <Option value="180">180</Option>
+            <Option value="365">365</Option>
           </Select>
         </FormItem>
-        <FormItem label="头像/LOGO" prop="logo">
-          <Upload
-            ref="upload"
-            :on-success="handleSuccess"
-            :format="['jpg','jpeg','png']"
-            :max-size="2048"
-            type="drag"
-            name="file"
-            action="https://upload.qiniup.com"
-            :data="{token: token}"
-            :show-upload-list="false"
-            style="display: inline-block;width:58px;">
-            <div style="width:58px;height:58px;line-height:58px;">
-              <Icon type="ios-camera" size="20" v-show="!formValidate.logo"></Icon>
-              <img style="width: 100%;height:100%" :src="formValidate.logo" v-show="formValidate.logo" alt="">
-            </div>
-          </Upload>
-          <input type="hidden" v-model="formValidate.logo">
+        <FormItem label="奖品跳转链接" prop="redirect_url">
+          <Input v-model="formValidate.redirect_url" placeholder="请输入奖品跳转链接"/>
         </FormItem>
         <FormItem>
           <Button type="primary" @click="handleSubmit('formValidate')">提交</Button>
@@ -75,41 +55,21 @@
       :mask-closable="false"
       :footer-hide="true"
       @on-ok="asyncOK">
-      <Form ref="formValidateEdit" :model="formValidate" :rules="ruleValidateEdit" :label-width="100">
-        <FormItem label="用户名" prop="username">
-          <Input v-model="formValidate.username" placeholder="请输入用户名" :disabled="isUserNameDisabled"/>
+      <Form ref="formValidateEdit" :model="formValidate" :rules="ruleValidateEdit" :label-width="120">
+        <FormItem label="奖品名" prop="sku_name">
+          <Input v-model="formValidate.sku_name" placeholder="请输入用户名"/>
         </FormItem>
-        <FormItem label="密码" prop="password">
-          <Input v-model="formValidate.password" placeholder="请输入密码"/>
-        </FormItem>
-        <FormItem label="重复密码" prop="repass">
-          <Input v-model="formValidate.repass" placeholder="请输入密码"/>
-        </FormItem>
-        <FormItem label="用户类型" prop="type" v-if="isShowType">
-          <Select v-model="formValidate.type" :value="formValidate.type" placeholder="请选择类型">
-            <Option value="1">用户</Option>
-            <Option value="2">代理商</Option>
-            <Option value="3">管理员</Option>
+        <FormItem label="奖品有效期" prop="valid_time">
+          <Select v-model="formValidate.valid_time" :value="formValidate.valid_time" placeholder="奖品有效期">
+            <Option value="7">7</Option>
+            <Option value="15">15</Option>
+            <Option value="30">30</Option>
+            <Option value="180">180</Option>
+            <Option value="365">365</Option>
           </Select>
         </FormItem>
-        <FormItem label="头像/LOGO" prop="logo">
-          <Upload
-            ref="upload"
-            :on-success="handleSuccess"
-            :format="['jpg','jpeg','png']"
-            :max-size="2048"
-            type="drag"
-            name="file"
-            action="https://upload.qiniup.com"
-            :data="{token: token}"
-            :show-upload-list="false"
-            style="display: inline-block;width:58px;">
-            <div style="width:58px;height:58px;line-height:58px;">
-              <Icon type="ios-camera" size="20" v-show="!formValidate.logo"></Icon>
-              <img style="width: 100%;height:100%" :src="formValidate.logo" v-show="formValidate.logo" alt="">
-            </div>
-          </Upload>
-          <input type="hidden" v-model="formValidate.logo">
+        <FormItem label="奖品跳转链接" prop="redirect_url">
+          <Input v-model="formValidate.redirect_url" placeholder="请输入奖品跳转链接"/>
         </FormItem>
         <FormItem>
           <Button type="primary" @click="handleSubmit('formValidateEdit')">提交</Button>
@@ -122,7 +82,7 @@
 
 <script>
 // import { getDate, getHandledValue } from '@/libs/tools'
-import { getUserList, editUser, addUser, setQrcode, delUser } from '@/api/commercial-tenant'
+import { getSkuList, addSku, editSku, handleAudit, delSku } from '@/api/sku'
 import axios from 'axios'
 import config from '@/config'
 
@@ -136,9 +96,10 @@ export default {
       pageNo: 1,
       totalPage: 1,
       typeArray: [ // 1，普通商户 2.代理商户／vip商户，3超级管理员
-        '普通商户',
-        '代理商户／vip商户',
-        '超级管理员'
+        '审核驳回',
+        '待审核',
+        '审核成功',
+        ''
       ],
       isUserNameDisabled: true,
       modalTitle: '编辑用户信息',
@@ -149,30 +110,28 @@ export default {
       isShowDetail: false,
       isShowDetailEdit: false,
       formSearch: {
-        name: ''
+        sku_name: ''
       },
       columns1: [
         {
-          title: '用户ID',
+          title: '奖品ID',
           key: 'id'
         },
         {
-          title: '用户名',
-          key: 'username'
+          title: '奖品名',
+          key: 'sku_name'
         },
         {
-          title: '注册日期',
-          key: 'add_time',
-          render: (h, params) => {
-            console.log(params.row.add_time)
-            console.log(dayjs(params.row.add_time * 1000).format('YYYY-MM-DD HH:mm:ss'))
-            // return h('span', getDate(params.row.add_time, 'year')
-            return h('span', dayjs(params.row.add_time * 1000).format('YYYY-MM-DD HH:mm:ss'))
-          }
+          title: '跳转链接',
+          key: 'redirect_url'
         },
         {
-          title: '等级/类型',
-          key: 'typeLabel'
+          title: '有效日期',
+          key: 'valid_time'
+        },
+        {
+          title: '状态',
+          key: 'statusLabel'
         },
         {
           title: '操作',
@@ -211,6 +170,34 @@ export default {
               }, '编辑'),
               h('Button', {
                 props: {
+                  type: 'primary',
+                  size: 'small'
+                },
+                style: {
+                  marginRight: '5px'
+                },
+                on: {
+                  click: () => {
+                    this.handlePass(params.row.id)
+                  }
+                }
+              }, '通过'),
+              h('Button', {
+                props: {
+                  type: 'primary',
+                  size: 'small'
+                },
+                style: {
+                  marginRight: '5px'
+                },
+                on: {
+                  click: () => {
+                    this.handleReject(params.row.id)
+                  }
+                }
+              }, '驳回'),
+              h('Button', {
+                props: {
                   type: 'error',
                   size: 'small'
                 },
@@ -222,18 +209,7 @@ export default {
                     this.remove(params.index)
                   }
                 }
-              }, '删除'),
-              h('Button', {
-                props: {
-                  type: 'primary',
-                  size: 'small'
-                },
-                on: {
-                  click: () => {
-                    this.setQrcode(params.row.id)
-                  }
-                }
-              }, '生成二维码')
+              }, '删除')
             ])
           }
         }
@@ -248,35 +224,31 @@ export default {
       },
 
       ruleValidate: {
-        username: [
-          { required: true, message: '用户名不能为空', trigger: 'blur' }
+        sku_name: [
+          { required: true, message: '奖品名不能为空', trigger: 'blur' }
         ],
-        password: [
-          { required: true, message: '密码不能为空', trigger: 'blur' }
+        valid_time: [
+          { required: true, message: '奖品有效期不能为空', trigger: 'blur' }
         ],
-        repass: [
-          { required: true, message: '重复密码不能为空', trigger: 'blur' }
-        ],
-        type: [
-          { required: true, message: '类型不能为空', trigger: 'change' }
-        ],
-        logo: [
-          { required: true, message: '图片不能为空', trigger: 'change' }
+        redirect_url: [
+          { required: true, message: '奖品跳转链接不能为空', trigger: 'change' }
         ]
       },
       ruleValidateEdit: {
-        username: [
-          { required: true, message: '用户名不能为空', trigger: 'blur' }
+        sku_name: [
+          { required: true, message: '奖品名不能为空', trigger: 'blur' }
         ],
-
-        logo: [
-          { required: true, message: '图片不能为空', trigger: 'change' }
+        valid_time: [
+          { required: true, message: '奖品有效期不能为空', trigger: 'blur' }
+        ],
+        redirect_url: [
+          { required: true, message: '奖品跳转链接不能为空', trigger: 'change' }
         ]
       }
     }
   },
   mounted () {
-    this.getUserList('', this.pageNo)
+    this.getSkuList('', this.pageNo)
   },
   watch: {
     isEdit () {
@@ -313,47 +285,48 @@ export default {
       this.show()
     },
 
-    editUser (data) {
-      editUser(data).then(res => {
+    editSku (data) {
+      editSku(data).then(res => {
         console.log(res)
         if (res.data.error_code === 0) {
           this.$Message.success('Success!')
           this.isShowDetail = false
           this.isShowDetailEdit = false
-          this.getUserList('', this.pageNo)
+          this.getSkuList('', this.pageNo)
         } else {
           this.$Message.error(res.data.error_msg)
         }
       })
     },
-    addUser (data) {
-      addUser(data).then(res => {
+    addSku (data) {
+      addSku(data).then(res => {
         console.log(res)
         if (res.data.error_code === 0) {
           this.$Message.success('Success!')
 
           this.isShowDetail = false
           this.isShowDetailEdit = false
-          this.getUserList('', this.pageNo)
+          this.getSkuList('', this.pageNo)
         } else {
           this.$Message.error(res.data.error_msg)
         }
       })
     },
 
-    getUserList (username, pageno) {
-      const url = '/merchant/lists?page=' + pageno
-      username = username || ''
+    getSkuList (sku_name, pageno) {
+      const url = '/sku/lists?page=' + pageno
+      sku_name = sku_name || ''
       const pagination = 2
-      getUserList({ url, username, pagination }).then(res => {
+      getSkuList({ url, sku_name, pagination }).then(res => {
         // console.log('res')
         // alert(44)
-        // console.log(res)
-        // console.log('res.data.data.data')
+        console.log(res)
+        console.log('res.data.data.data')
         // console.log(res.data.data.data)
         this.totalPage = res.data.data.total
         this.data1 = res.data.data.data.filter(item => {
-          item.typeLabel = this.typeArray[item.type - 1]
+          item.sku_id = item.id
+          item.statusLabel = this.typeArray[item.status + 1]
           return item.type = '' + item.type
         })
       })
@@ -364,39 +337,22 @@ export default {
     },
 
     remove (index) {
-      const merchant_id = this.data1[index].id
+      // this.data1.splice(index, 1)
+      const sku_id = this.data1[index].id
       const uid = this.$store.state.user.userId
       const access_token = this.$store.state.user.accessToken
 
-      delUser({ merchant_id, uid, access_token }).then(res => {
+      delSku({ sku_id, uid, access_token }).then(res => {
         if (res.data.error_code === 0) {
           this.$Message.success('Success!')
-
           this.pageNo = 1
-          this.getUserList('', this.pageNo)
-        } else {
-          this.$Message.error(res.data.error_msg)
-        }
-      })
-      // this.data1.splice(index, 1)
-    }
-    ,
-    setQrcode (id) {
-      console.log(id)
-      const data = {
-        merchant_id: id,
-        uid: this.$store.state.user.userId,
-        access_token: this.$store.state.user.accessToken
-      }
-      setQrcode(data).then(res => {
-        console.log(res)
-        if (res.data.error_code === 0) {
-          this.$Message.success('已成功生成二维码')
+          this.getSkuList('', this.pageNo)
         } else {
           this.$Message.error(res.data.error_msg)
         }
       })
     },
+
     asyncOK () {
       this.handleSubmit('formValidate')
     },
@@ -414,20 +370,15 @@ export default {
         if (valid) {
           if (name === 'formSearch') {
             this.pageNo = 1
-            this.getUserList(this.formSearch.name, this.pageNo)
+            this.getSkuList(this.formSearch.sku_name, this.pageNo)
           } else {
-            if (this.formValidate.password === this.formValidate.repass) {
-              this.formValidate.uid = this.$store.state.user.userId
-              this.formValidate.access_token = this.$store.state.user.accessToken
+            this.formValidate.uid = this.$store.state.user.userId
+            this.formValidate.access_token = this.$store.state.user.accessToken
 
-              if (name === 'formValidateEdit') {
-                this.editUser(this.formValidate)
-              } else {
-                this.addUser(this.formValidate)
-              }
+            if (name === 'formValidateEdit') {
+              this.editSku(this.formValidate)
             } else {
-              this.$Message.error('密码填写不一致!')
-              // this.loading = false
+              this.addSku(this.formValidate)
             }
           }
         } else {
@@ -454,7 +405,40 @@ export default {
     },
     changPageHandler (index) {
       this.pageNo = index
-      this.getUserList(this.formSearch.name, this.pageNo)
+      this.getSkuList(this.formSearch.name, this.pageNo)
+    },
+    handleReject (id) {
+      console.log(id)
+      const data = {
+        uid: this.$store.state.user.userId,
+        access_token: this.$store.state.user.accessToken,
+        sku_id: id,
+        status: -1,
+      }
+      handleAudit(data).then(res => {
+        if (res.data.error_code === 0) {
+          this.$Message.success('Success!')
+          this.getSkuList('', this.pageNo)
+        } else {
+          this.$Message.error(res.data.error_msg)
+        }
+      })
+    },
+    handlePass (id) {
+      const data = {
+        uid: this.$store.state.user.userId,
+        access_token: this.$store.state.user.accessToken,
+        sku_id: id,
+        status: 1,
+      }
+      handleAudit(data).then(res => {
+        if (res.data.error_code === 0) {
+          this.$Message.success('Success!')
+          this.getSkuList('', this.pageNo)
+        } else {
+          this.$Message.error(res.data.error_msg)
+        }
+      })
     }
   }
 }

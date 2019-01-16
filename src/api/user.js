@@ -46,3 +46,5 @@ export const logout = (token) => {
     method: 'post'
   })
 }
+
+

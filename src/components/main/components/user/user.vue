@@ -9,9 +9,12 @@
          <DropdownItem name="addUserInfo">
           完善个人信息
         </DropdownItem>
-        <DropdownItem name="userInfo">
-          修改个人信息
+        <DropdownItem name="pay">
+          充值
         </DropdownItem>
+        <!--<DropdownItem name="userInfo">-->
+          <!--修改密码-->
+        <!--</DropdownItem>-->
         <DropdownItem name="logout">退出登录</DropdownItem>
       </DropdownMenu>
     </Dropdown>
@@ -55,9 +58,13 @@ export default {
       })
     },
     addUserInfo(){
-      this.$router.push({
-        name: 'add-user-info'
-      })
+      // this.$router.push({
+      //   name: 'add-user-info'
+      // })
+      this.$store.commit('setIsShowDetailModal', true)
+    },
+    pay(){
+      this.$store.commit('setIsShowPayModal', true)
     },
     handleClick (name) {
       switch (name) {
@@ -66,6 +73,8 @@ export default {
         case 'userInfo': this.changeUserInfo()
           break
         case 'addUserInfo': this.addUserInfo()
+          break
+        case 'pay': this.pay()
           break
       }
     }
