@@ -244,7 +244,8 @@ export default {
         id: '',
         username: '',
         add_time: '',
-        type: ''
+        type: '',
+        logo: ''
       },
 
       ruleValidate: {
