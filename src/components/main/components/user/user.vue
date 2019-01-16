@@ -42,6 +42,7 @@ export default {
     ]),
     logout () {
       this.handleLogOut().then(() => {
+        localStorage.removeItem('tagNaveList')
         this.$router.push({
           name: 'login'
         })
