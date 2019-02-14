@@ -10,6 +10,9 @@ import i18n from '@/locale'
 import config from '@/config'
 import importDirective from '@/directive'
 import installPlugin from '@/plugin'
+
+import EventBus from '@/store/bus.js'
+
 import './index.less'
 import '@/assets/icons/iconfont.css'
 // import TreeTable from 'tree-table-vue'
@@ -18,6 +21,8 @@ import '@/assets/icons/iconfont.css'
 if (process.env.NODE_ENV !== 'production') {
   require('@/mock')
 }
+// 注册EventBus
+Vue.use(EventBus)
 
 Vue.use(iView, {
   i18n: (key, value) => i18n.t(key, value)

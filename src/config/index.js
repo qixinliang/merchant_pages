@@ -17,7 +17,7 @@ export default {
    * @description api请求基础路径
    */
   baseUrl: {
-    dev: 'http://landman.com.cn/',
+    dev: 'http://zhiyouwenhua.com/',
     pro: '/'
   },
 
@@ -26,7 +26,7 @@ export default {
 
   tokenUrl: {
     // dev: 'http://localhost:3000/token',
-    dev: 'http://landman.com.cn/qiniu/token',
+    dev: 'http://zhiyouwenhua.com/qiniu/token',
     pro: '/qiniu/token'
   },
   /**

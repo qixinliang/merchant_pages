@@ -60,7 +60,8 @@ export default [{
         name: 'user-manage',
         meta: {
           icon: 'md-settings',
-          title: '用户／商户管理'
+          title: '用户／商户管理',
+          access: ['admin','agent'],
         },
         component: () => import('@/view/single-page/commercial-tenant/list.vue')
       },
@@ -69,10 +70,21 @@ export default [{
         name: 'sku-manage',
         meta: {
           icon: 'md-settings',
-          title: '奖品管理'
+          title: '奖品管理',
+          access: ['admin','agent'],
         },
         component: () => import('@/view/single-page/sku/list.vue')
       }
+      // ,
+      // {
+      //   path: 'test',
+      //   name: 'test',
+      //   meta: {
+      //     icon: 'md-settings',
+      //     title: '普通用户测试',
+      //     access: ['customer'],
+      //   }
+      // }
     ]
   },
   {

@@ -18,7 +18,9 @@
         </Row>
       </Form>
       <Table border :columns="columns1" :data="data1"></Table>
-      <Page :total="totalPage" :page-size="2" show-elevator @on-change="changPageHandler" style="margin: 16px 0;"/>
+      <!--<Page :total="totalPage" :page-size="pageSize" show-elevator show-sizer @on-change="changPageHandler" style="margin: 16px 0;"/>-->
+      <Page :total="totalPage" :page-size="pageSize" show-elevator show-sizer @on-change="changPageHandler" @on-page-size-change="changPageSizeHandler"	style="margin: 16px 0;"/>
+
     </Card>
     <Modal
       v-model="isShowDetail"
@@ -125,6 +127,7 @@
 import { getUserList, editUser, addUser, setQrcode, delUser } from '@/api/commercial-tenant'
 import axios from 'axios'
 import config from '@/config'
+import {getUserInfo} from '@/api/user'
 
 const tokenUrl = process.env.NODE_ENV === 'development' ? config.tokenUrl.dev : config.tokenUrl.pro
 import dayjs from 'dayjs'
@@ -134,6 +137,7 @@ export default {
   data () {
     return {
       pageNo: 1,
+      pageSize:10,
       totalPage: 1,
       typeArray: [ // 1，普通商户 2.代理商户／vip商户，3超级管理员
         '普通商户',
@@ -277,6 +281,7 @@ export default {
     }
   },
   mounted () {
+    this.getUserInfo()
     this.getUserList('', this.pageNo)
   },
   watch: {
@@ -299,6 +304,24 @@ export default {
     }
   },
   methods: {
+    getUserInfo() {
+      // alert(1)
+      const data = {
+        username: this.$store.state.user.userName
+      }
+      getUserInfo(data).then(res => {
+        console.log('res')
+        console.log(res)
+        if (res.data.error_code === 0) {
+          const data = res.data.data
+          this.userDetail = data
+          this.userDetail.level = data.level ? data.level : 0
+          this.userDetail.erweima = data.erweima ? data.erweima : ''
+          this.userDetail.expire_date = data.expire_date ? data.expire_date : dayjs(new Date().getTime() + 365 * 24 * 60 * 60 * 1000).format('YYYY-MM-DD HH:mm:ss')
+          this.userDetail.erweima = data.erweima ? 'http://' + data.erweima : erweima
+        }
+      })
+    },
     handleAdd () {
       this.isEdit = false
       this.isShowDetail = true
@@ -345,7 +368,7 @@ export default {
     getUserList (username, pageno) {
       const url = '/merchant/lists?page=' + pageno
       username = username || ''
-      const pagination = 2
+      const pagination = this.pageSize
       getUserList({ url, username, pagination }).then(res => {
         // console.log('res')
         // alert(44)
@@ -456,6 +479,10 @@ export default {
     changPageHandler (index) {
       this.pageNo = index
       this.getUserList(this.formSearch.name, this.pageNo)
+    },
+    changPageSizeHandler(num){
+      this.pageSize = num
+      this.getUserList(this.formSearch.name, 1)
     }
   }
 }

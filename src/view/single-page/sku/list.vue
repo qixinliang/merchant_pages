@@ -4,7 +4,7 @@
       <Form ref="formSearch" :model="formSearch" :label-width="100">
         <Row>
           <Col :span="12">
-            <FormItem label="用户名" prop="sku_name">
+            <FormItem label="奖品名称" prop="sku_name">
               <Input v-model="formSearch.sku_name" placeholder="请输入用户名"></Input>
             </FormItem>
           </Col>
@@ -18,7 +18,9 @@
         </Row>
       </Form>
       <Table border :columns="columns1" :data="data1"></Table>
-      <Page :total="totalPage" :page-size="2" show-elevator @on-change="changPageHandler" style="margin: 16px 0;"/>
+      <!--<Page :total="totalPage" :page-size="2" show-elevator @on-change="changPageHandler" style="margin: 16px 0;"/>-->
+      <Page :total="totalPage" :page-size="pageSize" show-elevator show-sizer @on-change="changPageHandler" @on-page-size-change="changPageSizeHandler"	style="margin: 16px 0;"/>
+
     </Card>
     <Modal
       v-model="isShowDetail"
@@ -95,6 +97,7 @@ export default {
     return {
       pageNo: 1,
       totalPage: 1,
+      pageSize:10,
       typeArray: [ // 1，普通商户 2.代理商户／vip商户，3超级管理员
         '审核驳回',
         '待审核',
@@ -316,7 +319,7 @@ export default {
     getSkuList (sku_name, pageno) {
       const url = '/sku/lists?page=' + pageno
       sku_name = sku_name || ''
-      const pagination = 2
+      const pagination = this.pageSize
       getSkuList({ url, sku_name, pagination }).then(res => {
         // console.log('res')
         // alert(44)
@@ -439,6 +442,11 @@ export default {
           this.$Message.error(res.data.error_msg)
         }
       })
+    },
+    changPageSizeHandler(num){
+      this.pageSize = num
+      // this.getUserList(this.formSearch.name, 1)
+      this.getSkuList('', 1)
     }
   }
 }

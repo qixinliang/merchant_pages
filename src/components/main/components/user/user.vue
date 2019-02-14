@@ -6,7 +6,7 @@
       </Badge> -->
       <Icon :size="18" type="md-arrow-dropdown"></Icon>
       <DropdownMenu slot="list">
-         <DropdownItem name="addUserInfo">
+         <DropdownItem name="addUserInfo" v-if="!isAdmin">
           完善个人信息
         </DropdownItem>
         <DropdownItem name="pay">
@@ -35,6 +35,11 @@ export default {
     //   type: Number,
     //   default: 0
     // }
+  },
+  computed: {
+    isAdmin () {
+      return this.$store.state.user.token === 'admin'
+    }
   },
   methods: {
     ...mapActions([

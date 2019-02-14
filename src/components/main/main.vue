@@ -398,7 +398,7 @@ export default {
         if (valid) {
 
           if (name === 'formValidateEdit') {
-            this.editUserDetail(this.formValidate)
+            this.editUserDetail()
           }
         } else {
           this.$Message.error('请填写正确再提交!')
@@ -412,9 +412,12 @@ export default {
       data.uid = this.$store.state.user.userId
       data.access_token = this.$store.state.user.accessToken
       data.merchant_name = this.formValidate.username
+
       editUserDetail(data).then(res => {
         if (res.data.error_code === 0) {
+          this.$store.commit('setAvator', res.data.data.logo)
           this.$Message.success('修改成功')
+          this.$bus.$emit(this.$bus.RELOAD_USER_INFO)
           this.closeDetailModal()
 
         }
