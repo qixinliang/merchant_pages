@@ -68,7 +68,7 @@
             <Col span="5" order="6">3级</Col>
           </Row>
           <Row type="flex" class-name="star-detail-base">
-            <Col span="3" order="1">我的二维码</Col>
+            <Col span="3" order="1">我的小程序码</Col>
             <Col span="5" order="2">
               <Button>查看</Button>
               <Button style="margin-left: 16px">重置</Button>
@@ -79,7 +79,7 @@
             <Col span="5" order="6">1000元</Col>
           </Row>
           <Row type="flex" class-name="star-detail-base">
-            <Col span="3" order="1">我的二维码</Col>
+            <Col span="3" order="1">我的小程序码</Col>
             <Col span="5" order="2">
               <Button>查看</Button>
               <Button style="margin-left: 16px">重置</Button>

@@ -24,7 +24,7 @@
     </Card>
     <Modal
       v-model="isShowDetail"
-      title="添加用户信息"
+      title="添加奖品信息"
       :mask-closable="false"
       :footer-hide="true"
       @on-ok="asyncOK">
@@ -43,6 +43,25 @@
         </FormItem>
         <FormItem label="奖品跳转链接" prop="redirect_url">
           <Input v-model="formValidate.redirect_url" placeholder="请输入奖品跳转链接"/>
+        </FormItem>
+        <FormItem label="奖品LOGO" prop="logo">
+          <Upload
+            ref="upload"
+            :on-success="handleSuccess"
+            :format="['png']"
+            :max-size="2048"
+            type="drag"
+            name="file"
+            action="https://upload.qiniup.com"
+            :data="{token: token}"
+            :show-upload-list="false"
+            style="display: inline-block;width:58px;">
+            <div style="width:58px;height:58px;line-height:58px;">
+              <Icon type="ios-camera" size="20" v-show="!formValidate.logo"></Icon>
+              <img style="width: 100%;height:100%" :src="formValidate.logo" v-show="formValidate.logo" alt="">
+            </div>
+          </Upload>
+          <input type="hidden" v-model="formValidate.logo">
         </FormItem>
         <FormItem>
           <Button type="primary" @click="handleSubmit('formValidate')">提交</Button>
@@ -73,6 +92,25 @@
         <FormItem label="奖品跳转链接" prop="redirect_url">
           <Input v-model="formValidate.redirect_url" placeholder="请输入奖品跳转链接"/>
         </FormItem>
+        <FormItem label="奖品LOGO" prop="logo">
+          <Upload
+            ref="upload"
+            :on-success="handleSuccess"
+            :format="['png']"
+            :max-size="2048"
+            type="drag"
+            name="file"
+            action="https://upload.qiniup.com"
+            :data="{token: token}"
+            :show-upload-list="false"
+            style="display: inline-block;width:58px;">
+            <div style="width:58px;height:58px;line-height:58px;">
+              <Icon type="ios-camera" size="20" v-show="!formValidate.logo"></Icon>
+              <img style="width: 100%;height:100%" :src="formValidate.logo" v-show="formValidate.logo" alt="">
+            </div>
+          </Upload>
+          <input type="hidden" v-model="formValidate.logo">
+        </FormItem>
         <FormItem>
           <Button type="primary" @click="handleSubmit('formValidateEdit')">提交</Button>
           <Button @click="handleCancel" style="margin-left: 8px">取消</Button>
@@ -87,7 +125,7 @@
 import { getSkuList, addSku, editSku, handleAudit, delSku } from '@/api/sku'
 import axios from 'axios'
 import config from '@/config'
-
+import logoImg from '@/assets/images/logo-min.jpg'
 const tokenUrl = process.env.NODE_ENV === 'development' ? config.tokenUrl.dev : config.tokenUrl.pro
 import dayjs from 'dayjs'
 
@@ -98,6 +136,7 @@ export default {
       pageNo: 1,
       totalPage: 1,
       pageSize:10,
+      logoImg,
       typeArray: [ // 1，普通商户 2.代理商户／vip商户，3超级管理员
         '审核驳回',
         '待审核',
@@ -123,6 +162,35 @@ export default {
         {
           title: '奖品名',
           key: 'sku_name'
+        },
+        {
+          title: '奖品LOGO',
+          key: 'logo',
+          align: 'center',
+          render: (h, params) => {
+            console.log(params)
+            const src = params.row.logo || this.logoImg
+            return h('img', {
+              attrs: {
+                src: src,
+                size: 'small'
+              },
+              style: {
+                marginTop: '6px',
+                width:'36px',
+                height: '36px'
+              },
+              on: {
+                click: () => {
+                  this.handleEdit(params.index)
+                }
+              }
+            })
+          }
+        },
+        {
+          title: '券号',
+          key: 'sku_no'
         },
         {
           title: '跳转链接',
@@ -223,7 +291,8 @@ export default {
         id: '',
         username: '',
         add_time: '',
-        type: ''
+        type: '',
+        logo: ''
       },
 
       ruleValidate: {
@@ -235,6 +304,9 @@ export default {
         ],
         redirect_url: [
           { required: true, message: '奖品跳转链接不能为空', trigger: 'change' }
+        ],
+        logo: [
+          { required: true, message: '图片不能为空', trigger: 'change' }
         ]
       },
       ruleValidateEdit: {
@@ -246,6 +318,9 @@ export default {
         ],
         redirect_url: [
           { required: true, message: '奖品跳转链接不能为空', trigger: 'change' }
+        ],
+        logo: [
+          { required: true, message: '图片不能为空', trigger: 'change' }
         ]
       }
     }

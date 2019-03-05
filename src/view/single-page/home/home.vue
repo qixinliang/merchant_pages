@@ -15,7 +15,7 @@
           <Col span="5" order="6">{{userDetail.level}}级</Col>
         </Row>
         <Row type="flex" class-name="star-detail-base">
-          <Col span="3" order="1">我的二维码</Col>
+          <Col span="3" order="1">我的小程序码</Col>
           <Col span="5" order="2">
             <div class="col-center">
               <Button @click="preview(userDetail.erweima)">查看</Button>
@@ -83,9 +83,9 @@
         })
       },
       preview() {
-        const title = '查看二维码'
+        const title = '查看小程序码'
         const content = '<div class="image-wrapper"><img style="width: 100%;height:100%"  src="' + this.userDetail.erweima + '"> ' +
-          '<Button @click="setQrcode">生成二维码</Button>' +
+          '<Button @click="setQrcode">生成小程序码</Button>' +
           '</div>'
         this.$Modal.info({
           title: title,
@@ -111,7 +111,7 @@
                 top: '50%',
                 zIndex: 1000
               }
-            }, '生成二维码'),
+            }, '生成小程序码'),
               h('img', {
                 attrs: {
                   src: this.userDetail.erweima,
@@ -121,9 +121,9 @@
                   position: 'absolute',
                   left: 0,
                   top: 0,
-                  width: '260px',
-                  height: '260px',
-                  margin: 'auto'
+                  width: '250px',
+                  height: '250px',
+                  marginLeft: '5px'
                 }
               })]
 
@@ -149,7 +149,7 @@
           console.log(res)
           if (res.data.error_code === 0) {
             this.userDetail.erweima = 'http://' + res.data.data.erweima
-            this.$Message.success('已成功生成二维码')
+            this.$Message.success('已成功生成小程序码')
           } else {
             this.$Message.error(res.data.error_msg)
           }

@@ -72,6 +72,21 @@ export const addUser = ({ username, password, repass, logo, uid, access_token })
   })
 }
 
+// export const setQrcode = ({ merchant_id, uid, access_token }) => {
+//   const data = {
+//     data: {
+//       merchant_id
+//     },
+//     uid,
+//     access_token
+//   }
+//   return axios.request({
+//     url: '/merchant/erweima',
+//     data,
+//     method: 'post'
+//   })
+// }
+
 export const setQrcode = ({ merchant_id, uid, access_token }) => {
   const data = {
     data: {
@@ -81,11 +96,12 @@ export const setQrcode = ({ merchant_id, uid, access_token }) => {
     access_token
   }
   return axios.request({
-    url: '/merchant/erweima',
+    url: '/weixin/qr',
     data,
     method: 'post'
   })
 }
+
 
 export const delUser = ({ merchant_id, uid, access_token }) => {
   const data = {

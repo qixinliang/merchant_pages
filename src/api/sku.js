@@ -14,13 +14,14 @@ export const getSkuList = ({ url, sku_name, pagination }) => {
   })
 }
 
-export const editSku = ({ sku_id, sku_name, valid_time, redirect_url, uid, access_token }) => {
+export const editSku = ({ sku_id, sku_name, valid_time, redirect_url, uid, access_token, logo }) => {
   const data = {
     data: {
       sku_id,
       sku_name,
       valid_time,
-      redirect_url
+      redirect_url,
+      logo
     },
     uid,
     access_token

@@ -60,7 +60,7 @@ export default [{
         name: 'user-manage',
         meta: {
           icon: 'md-settings',
-          title: '用户／商户管理',
+          title: '商户管理',
           access: ['admin','agent'],
         },
         component: () => import('@/view/single-page/commercial-tenant/list.vue')

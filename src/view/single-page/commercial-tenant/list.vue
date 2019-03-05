@@ -157,11 +157,11 @@ export default {
       },
       columns1: [
         {
-          title: '用户ID',
+          title: '商户ID',
           key: 'id'
         },
         {
-          title: '用户名',
+          title: '商户名',
           key: 'username'
         },
         {
@@ -237,7 +237,7 @@ export default {
                     this.setQrcode(params.row.id)
                   }
                 }
-              }, '生成二维码')
+              }, '生成小程序码')
             ])
           }
         }
@@ -415,7 +415,7 @@ export default {
       setQrcode(data).then(res => {
         console.log(res)
         if (res.data.error_code === 0) {
-          this.$Message.success('已成功生成二维码')
+          this.$Message.success('已成功生成小程序码')
         } else {
           this.$Message.error(res.data.error_msg)
         }
