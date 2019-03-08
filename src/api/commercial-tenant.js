@@ -54,13 +54,14 @@ export const editUserDetail = ({ id, merchant_name, boss, tel, mobile, address, 
   })
 }
 
-export const addUser = ({ username, password, repass, logo, uid, access_token }) => {
+export const addUser = ({ username, password, repass, logo, uid, access_token, type }) => {
   const data = {
     data: {
       username,
       password,
       repass,
-      logo
+      logo,
+      type
     },
     uid,
     access_token
@@ -102,11 +103,10 @@ export const setQrcode = ({ merchant_id, uid, access_token }) => {
   })
 }
 
-
 export const delUser = ({ merchant_id, uid, access_token }) => {
   const data = {
     data: {
-      merchant_id,
+      merchant_id
     },
     uid,
     access_token

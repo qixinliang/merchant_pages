@@ -19,6 +19,7 @@
           <Col span="5" order="2">
             <div class="col-center">
               <Button @click="preview(userDetail.erweima)">查看</Button>
+              <Button style="margin-left: 8px" @click="preview(userDetail.erweima)">下载</Button>
             </div>
           </Col>
           <Col span="3" order="3">会员到期日</Col>
