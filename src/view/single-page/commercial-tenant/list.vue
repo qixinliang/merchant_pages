@@ -316,9 +316,9 @@ export default {
           const data = res.data.data
           this.userDetail = data
           this.userDetail.level = data.level ? data.level : 0
-          this.userDetail.erweima = data.erweima ? data.erweima : ''
+          this.userDetail.erweima = data.mini_program_ma ? data.mini_program_ma : ''
           this.userDetail.expire_date = data.expire_date ? data.expire_date : dayjs(new Date().getTime() + 365 * 24 * 60 * 60 * 1000).format('YYYY-MM-DD HH:mm:ss')
-          this.userDetail.erweima = data.erweima ? 'http://' + data.erweima : erweima
+          // this.userDetail.erweima = data.erweima ? 'http://' + data.erweima : erweima
         }
       })
     },

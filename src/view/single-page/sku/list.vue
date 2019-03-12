@@ -163,6 +163,7 @@ export default {
           title: '奖品名',
           key: 'sku_name'
         },
+        
         {
           title: '奖品LOGO',
           key: 'logo',
@@ -203,6 +204,10 @@ export default {
         {
           title: '状态',
           key: 'statusLabel'
+        },
+        {
+          title: '商户名',
+          key: 'username'
         },
         {
           title: '操作',
