@@ -61,7 +61,7 @@ export default [{
         meta: {
           icon: 'md-settings',
           title: '商户管理',
-          access: ['admin','agent'],
+          access: ['admin','agent','customer'],
         },
         component: () => import('@/view/single-page/commercial-tenant/list.vue')
       },
@@ -71,7 +71,7 @@ export default [{
         meta: {
           icon: 'md-settings',
           title: '奖品管理',
-          access: ['admin','agent'],
+          access: ['admin','agent','customer'],
         },
         component: () => import('@/view/single-page/sku/list.vue')
       }
